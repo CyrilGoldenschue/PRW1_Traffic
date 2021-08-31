@@ -1,0 +1,70 @@
+#Rectangle {
+    width: 120px;
+    background: #282823;
+    display: inline-block;
+    border-radius: 10px;
+    margin-top: 150px;
+}
+
+.button {
+    background-color: dodgerblue; /* Green */
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    width: 50px;
+    display: flex;
+    margin-top: 20px;
+    border-radius: 5px;
+    justify-content: center;
+    position: relative;
+}
+
+.Circle {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.disabled {
+    pointer-events: none;
+    cursor: default;
+}
+
+.Green {
+    background: green;
+}
+
+.Orange {
+    background: orange;
+}
+
+
+.Red {
+    background: red;
+}
+
+.Extinct {
+    background: darkgray;
+}
+
+@keyframes blinking {
+    0% {
+        background: orange;
+        opacity: 100%;
+    }
+    50% {
+        background: darkgray;
+    }
+    100% {
+        background: orange;
+        opacity: 100%;
+    }
+}
+
+.Blink{
+    animation: blinking 1s infinite;
+}
