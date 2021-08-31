@@ -2,11 +2,6 @@
 require_once "Model/Class/Light.php";
 class TrafficLight
 {
-    private $red = false;
-    private $orange = false;
-    private $green = false;
-    private $blink = false;
-
     private int $state;
     private $lights;
 
@@ -25,5 +20,14 @@ class TrafficLight
     public function GetLights(){
         return $this->lights[$this->state];
     }
+
+    public function canStop(){
+        return (array_search($this->state, [0, 2]) !== false);
+    }
+
+    public function canStart(){
+        return (array_search($this->state, [4]) === false);
+    }
+
 
 }
