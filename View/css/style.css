@@ -1,4 +1,4 @@
-#Rectangle {
+#TrafficLight {
     width: 120px;
     background: #282823;
     display: inline-block;
@@ -6,7 +6,7 @@
     margin-top: 150px;
 }
 
-#hidden{
+.hidden{
     visibility: hidden;
 }
 
@@ -46,12 +46,11 @@
     background: orange;
 }
 
-
 .Red {
     background: red;
 }
 
-.Extinct {
+.Off {
     background: darkgray;
 }
 

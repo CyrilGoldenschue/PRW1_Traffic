@@ -7,25 +7,26 @@ error_reporting(E_ALL);
 
 require_once "Controller/Controller.php";
 
-$_SESSION['state'] = isset($_POST['state']) ? $_POST['state'] : 0;
+$light = isset($_SESSION['light']) ? unserialize($_SESSION['light']) : new TrafficLight(0);
+
 $_SESSION['action'] = isset($_POST['action']) ? $_POST['action'] : 0;
 
-if(isset($_SESSION["action"])) {
-    switch ($_SESSION["action"]) {
-        case "Next":
-            NextState();
-            break;
-
-        case "HS":
-            HS();
-            break;
-
-        default:
-            IncludeView();
-            break;
-    }
-}else{
-    IncludeView();
+$controller = new Controller();
+if (isset($_POST['action'])) {
+    $action = $_POST['action'];
 }
 
+switch ($action) {
+    case 'next':
+        $controller->next($light);
+        break;
+    case 'hs':
+        $controller->hs($light);
+        break;
+    default:
+        $controller->hs($light);
+}
+
+
+$_SESSION['light'] = serialize($light);
 ?>

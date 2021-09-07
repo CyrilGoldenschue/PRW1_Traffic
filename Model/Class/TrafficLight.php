@@ -1,33 +1,128 @@
 <?php
 require_once "Model/Class/Light.php";
+require_once 'Model/Class/LampState.php';
+require_once 'Model/Class/TrafficLightState.php';
+
 class TrafficLight
 {
-    private int $state;
-    private $lights;
+    public $red;
+    public $yellow;
+    public $green;
+    public $state;
 
-    public function __construct(int $state)
+    public function __construct($state)
+    {
+        $this->setState(TrafficLightState::HS);
+    }
+
+    /**
+     * Put the light in a specific state, 'stop' if an unexpected value is supplied
+     * @param $state
+     */
+    public function setState($state)
     {
         $this->state = $state;
-        $this->lights = [
-            0=>[new Light("Red"), new Light(), new Light(), 10000],
-            1=>[new Light("Red"), new Light("Orange"), new Light(), 3000],
-            2=>[new Light(), new Light(), new Light("Green"), 5000],
-            3=>[new Light(), new Light("Orange"), new Light(), 2000],
-            4=>[new Light(), new Light("Blink"), new Light(), 0]
-        ];
+        switch ($state) {
+            case TrafficLightState::STOP:
+                $this->red = LampState::ON;
+                $this->yellow = LampState::OFF;
+                $this->green = LampState::OFF;
+                break;
+            case TrafficLightState::READY:
+                $this->red = LampState::ON;
+                $this->yellow = LampState::ON;
+                $this->green = LampState::OFF;
+                break;
+            case TrafficLightState::GO:
+                $this->red = LampState::OFF;
+                $this->yellow = LampState::OFF;
+                $this->green = LampState::ON;
+                break;
+            case TrafficLightState::SLOW:
+                $this->red = LampState::OFF;
+                $this->yellow = LampState::ON;
+                $this->green = LampState::OFF;
+                break;
+            case TrafficLightState::HS:
+                $this->red = LampState::OFF;
+                $this->yellow = LampState::BLINK;
+                $this->green = LampState::OFF;
+                break;
+            default: // same as stop
+                $this->red = LampState::ON;
+                $this->yellow = LampState::OFF;
+                $this->green = LampState::OFF;
+        }
     }
 
-    public function GetLights(){
-        return $this->lights[$this->state];
+    /**
+     * Put the light in the next state according to the normal operation cycle
+     */
+    public function nextState()
+    {
+        switch ($this->state) {
+            case TrafficLightState::STOP:
+                $this->setState(TrafficLightState::READY);
+                break;
+            case TrafficLightState::READY:
+                $this->setState(TrafficLightState::GO);
+                break;
+            case TrafficLightState::GO:
+                $this->setState(TrafficLightState::SLOW);
+                break;
+            case TrafficLightState::SLOW:
+            case TrafficLightState::HS:
+                $this->setState(TrafficLightState::STOP);
+                break;
+            default: // don't change
+        }
     }
 
-    public function canStop(){
-        return (array_search($this->state, [0, 2]) !== false);
+    /**
+     * Put the light in HS state
+     */
+    public function stop()
+    {
+        switch ($this->state) {
+            case TrafficLightState::STOP:
+            case TrafficLightState::GO:
+                $this->setState(TrafficLightState::HS);
+                break;
+            case TrafficLightState::HS:
+                $this->setState(TrafficLightState::STOP);
+                break;
+            default: // don't change
+        }
     }
 
-    public function canStart(){
-        return (array_search($this->state, [4]) === false);
+    /**
+     * True if the light can be put in HS state
+     */
+    public function canStop()
+    {
+        return (array_search($this->state,[TrafficLightState::STOP,TrafficLightState::GO]) !== false);
     }
 
-
+    /**
+     * return the time (in milliseconds) the light is supposed to stay in its current state
+     */
+    public function stateDuration()
+    {
+        switch ($this->state) {
+            case TrafficLightState::STOP:
+                return 10*1000;
+                break;
+            case TrafficLightState::READY:
+                return 2*1000;
+                break;
+            case TrafficLightState::GO:
+                return 5*1000;
+                break;
+            case TrafficLightState::SLOW:
+                return 3*1000;
+                break;
+            default:
+                return null;
+        }
+    }
 }
