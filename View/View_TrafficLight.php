@@ -7,7 +7,7 @@
     </head>
 <body>
 <div>
-    <div id="Rectangle">
+    <div id="Rectangle" data-timer="<?= $trafficLight->GetLights($_SESSION['state'])[3] ?> ">
         <div class="Circle <?= ($trafficLight->GetLights($_SESSION['state'])[0]->GetColor() )?>"></div>
         <div class="Circle <?= ($trafficLight->GetLights($_SESSION['state'])[1]->GetColor() )?>"></div>
         <div class="Circle <?= ($trafficLight->GetLights($_SESSION['state'])[2]->GetColor() )?>"></div>

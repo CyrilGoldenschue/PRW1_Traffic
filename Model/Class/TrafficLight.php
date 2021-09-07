@@ -9,11 +9,11 @@ class TrafficLight
     {
         $this->state = $state;
         $this->lights = [
-            0=>[new Light("Red"), new Light(), new Light()],
-            1=>[new Light("Red"), new Light("Orange"), new Light()],
-            2=>[new Light(), new Light(), new Light("Green")],
-            3=>[new Light(), new Light("Orange"), new Light()],
-            4=>[new Light(), new Light("Blink"), new Light()]
+            0=>[new Light("Red"), new Light(), new Light(), 10000],
+            1=>[new Light("Red"), new Light("Orange"), new Light(), 3000],
+            2=>[new Light(), new Light(), new Light("Green"), 5000],
+            3=>[new Light(), new Light("Orange"), new Light(), 2000],
+            4=>[new Light(), new Light("Blink"), new Light(), 0]
         ];
     }
 
