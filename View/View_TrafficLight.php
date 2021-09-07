@@ -17,14 +17,15 @@
     <form method="post" >
         <input type="hidden" name="action" value="Next">
         <input type="hidden" name="state" value="<?= $_SESSION['state'] ?>">
-        <input type="submit" class="button" value="=>">
+        <input type="submit" id="NextState" class="button" value="=>">
     </form>
     <form method="post">
         <input type="hidden" name="action" value="HS">
         <input type="hidden" name="state" value="<?= $_SESSION['state'] ?>">
-        <input type="submit" class="button" value="HS">
+        <input type="submit" id="Stop" class="button" value="<?= $_SESSION['state']==4? "START" : "HS" ?>">
     </form>
 </div>
+<script src="../Public/js/Timer.js" ></script>
 
 
 </body>
