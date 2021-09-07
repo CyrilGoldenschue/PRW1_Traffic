@@ -6,13 +6,17 @@
     margin-top: 150px;
 }
 
+#hidden{
+    visibility: hidden;
+}
+
 .button {
     background-color: dodgerblue; /* Green */
     color: white;
     padding: 15px 32px;
     text-align: center;
     text-decoration: none;
-    width: 50px;
+    width: 100px;
     display: flex;
     margin-top: 20px;
     border-radius: 5px;

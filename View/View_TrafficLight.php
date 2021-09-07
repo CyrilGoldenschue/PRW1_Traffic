@@ -14,7 +14,7 @@
     </div>
 </div>
 <div>
-    <form method="post" >
+    <form method="post" id="hidden" >
         <input type="hidden" name="action" value="Next">
         <input type="hidden" name="state" value="<?= $_SESSION['state'] ?>">
         <input type="submit" id="NextState" class="button" value="=>">
